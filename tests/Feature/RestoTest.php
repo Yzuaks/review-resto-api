@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\Resto;
+use App\Models\Review;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RestoTest extends TestCase
 {
@@ -63,6 +66,21 @@ class RestoTest extends TestCase
     ->assertOk()
     ->assertJsonStructure(['name', 'description', 'address']);
 
+ }
+
+ public function test_user_can_list_reviews_for_this_record()
+ {
+     $reviewCount = 5;
+     $record = Resto::factory()
+         ->has(Review::factory()->count($reviewCount))
+         ->create();
+
+     $user = User::factory()->createOne();
+     Sanctum::actingAs($user);
+
+     $this->getJson(route('restos.reviews', $record))
+         ->assertOk()
+         ->assertJsonCount($reviewCount);
  }
 
 }
