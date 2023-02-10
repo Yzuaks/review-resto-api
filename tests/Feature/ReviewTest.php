@@ -18,7 +18,7 @@ class ReviewTest extends TestCase
     {
       
        $count = 5;
-       $data = Review::factory()->count(5)->create();
+       Review::factory()->count(5)->create();
    
        $user = User::factory()->createOne();
        Sanctum::actingAs($user);
