@@ -37,7 +37,7 @@ class AuthenticationController extends Controller
         'access_token' => $user->createToken($request->device_name)->plainTextToken,
         
         //dan kembalikan usernya
-        'user' => '$user',
+        'user' => $user,
         ];
     }
 
