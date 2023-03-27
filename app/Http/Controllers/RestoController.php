@@ -20,12 +20,11 @@ class RestoController extends Controller
 
     public function store(StoreRestoRequest $request)
     {
-
-       return Resto::create(
-        $request->validated()
-       );
-
+        return Resto::create(
+            $request->validated()
+        );
     }
+
 
     public function show(Resto $resto)
     {
